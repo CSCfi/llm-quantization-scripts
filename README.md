@@ -1,14 +1,13 @@
 # Quantization
 
-
-This repository explores **quantization methods for Large Language Models (LLMs)**.  
+This repository explores quantization methods for Large Language Models (LLMs).  
 Quantization is a key technique for reducing model size and inference cost, enabling LLMs to run efficiently on consumer hardware or limited GPU memory.
 
 We provide examples and experiments for:
 
-- **[BitsAndBytes (bnb)](https://github.com/mahnoormahnoorr/Quantization/tree/main/bitsandbytes)** – nf4 quantization using the Hugging Face integration.
-- **[AWQ (Activation-aware Weight Quantization)](https://github.com/mahnoormahnoorr/Quantization/tree/main/AWQ)** – a method that preserves accuracy by considering activation statistics.
-- **[GPTQ (Gradient Post-training Quantization)](https://github.com/mahnoormahnoorr/Quantization/tree/main/GPTQ)** – post-training quantization optimized for autoregressive transformers.
+- **[Bitsandbytes (bnb)](https://github.com/CSCfi/llm-quantization-scripts/tree/main/BitsAndBytes)** – nf4 quantization using the Hugging Face integration.
+- **[AWQ (Activation-aware Weight Quantization)](https://github.com/CSCfi/llm-quantization-scripts/tree/main/AWQ)** – a method that preserves accuracy by considering activation statistics.
+- **[GPTQ (Gradient Post-training Quantization)](https://github.com/CSCfi/llm-quantization-scripts/tree/main/GPTQ)** – post-training quantization optimized for autoregressive transformers.
 
 ---
 
@@ -22,13 +21,8 @@ We provide examples and experiments for:
    - Inference time comparisons before and after quantization.  
    - Model size reduction (disk footprint in MB).  
 
-
 3. **Guides & Utilities**  
    - Helper functions for measuring model size, timing inference, and testing the quantized model.  
    - Notes on how to run the examples on Puhti, Mahti and LUMI.
-
-
- 
-
+     
 ---
-
