@@ -7,12 +7,12 @@ from transformers import (
     GPTQConfig,
 )
 
-# Load base model and run initial inference
 model_name = "facebook/opt-125m"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 prompt = "The future of AI is"
 
+# Measure model inference time and generate sample output for a given prompt
 def benchmark(model, tokenizer, prompt, max_new_tokens=50):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
@@ -41,6 +41,10 @@ def benchmark(model, tokenizer, prompt, max_new_tokens=50):
 
     return decoded_text, elapsed_time
 
+# Load base model and tokenizer
+model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
 # Run benchmark on full model
 initial_output, initial_time = benchmark(model, tokenizer, prompt)
 
@@ -49,8 +53,7 @@ save_dir_full = model_name.split("/")[-1] + "-full"
 model.save_pretrained(save_dir_full, safe_serialization=True)
 tokenizer.save_pretrained(save_dir_full)
 
-
-# Quantize the model with GPTQ
+# Set GPTQ-config
 # Optionally set 'model_seqlen' for models
 # where GPTQ cannot automatically infer the max sequence length
 gptq_config = GPTQConfig(
@@ -60,22 +63,24 @@ gptq_config = GPTQConfig(
   # model_seqlen (int, optional) — The maximum sequence length that the model can take.
 )
 
+# Quantize the model with GPTQ
 quantized_model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=gptq_config,
     device_map="auto")
 
+# Save quantized model
 save_dir_quant = model_name.split("/")[-1] + "-gptq-config"
 # Move model to a CPU for saving
 quantized_model.to("cpu")
 quantized_model.save_pretrained(save_dir_quant, safe_serialization=True)
-
 tokenizer.save_pretrained(save_dir_quant)
 
-# Reload quantized model and test inference
+# Reload quantized model and tokenizer
 quant_model = AutoModelForCausalLM.from_pretrained(save_dir_quant, device_map="auto")
 quant_tokenizer = AutoTokenizer.from_pretrained(save_dir_quant)
 
+# Run benchmark on quantized model
 quant_output, quant_time = benchmark(quant_model, quant_tokenizer, prompt)
 
 # Compare model sizes

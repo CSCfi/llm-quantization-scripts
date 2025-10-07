@@ -22,6 +22,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 dispatch_for_generation(model)
 
+# Measure model inference time and generate sample output for a given prompt
 def benchmark(model, tokenizer, prompt):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
@@ -62,6 +63,7 @@ tokenizer.save_pretrained(save_dir_full)
 dataset = load_dataset(dataset_name, split=f"{dataset_split}[:{num_calibration_samples}]")
 dataset = dataset.shuffle(seed=42)
 
+# Flatten each example's list of messages into a single text string with roles
 def preprocess(example):
     text = ""
     for msg in example["messages"]:
@@ -72,6 +74,7 @@ def preprocess(example):
 
 dataset = dataset.map(preprocess, batched=False)
 
+# Tokenize dataset
 def tokenize_sample(sample):
     return tokenizer(
         sample["text"],
@@ -83,9 +86,10 @@ def tokenize_sample(sample):
 
 dataset = dataset.map(tokenize_sample, remove_columns=dataset.column_names, batched=False)
 
-# Quantization setup
+# Set quantization recipe
 recipe = GPTQModifier(targets="Linear", scheme="W4A16", ignore=["lm_head"])
 
+# Quantize model
 oneshot(
     model=model,
     dataset=dataset,
@@ -94,7 +98,7 @@ oneshot(
     num_calibration_samples=num_calibration_samples
 )
 
-# Save compressed model
+# Save quantized model
 save_dir_quant = model_name.split("/")[-1] + "-gptq-modifier"
 model.save_pretrained(save_dir_quant, save_compressed=True, safe_serialization=True)
 tokenizer.save_pretrained(save_dir_quant)
@@ -102,9 +106,9 @@ tokenizer.save_pretrained(save_dir_quant)
 # Reload quantized model for inference
 quant_model = AutoModelForCausalLM.from_pretrained(save_dir_quant, device_map="auto")
 quant_tokenizer = AutoTokenizer.from_pretrained(save_dir_quant)
+dispatch_for_generation(quant_model) # utility function from llmcompressor.utils that prepares a model for efficient text generation
 
-dispatch_for_generation(quant_model)
-
+# Run benchmark on quantized model
 quant_output, quant_time = benchmark(quant_model, quant_tokenizer, prompt)
 
 # Compare model sizes
@@ -128,5 +132,3 @@ print("\n=== Quantized Model ===")
 print(f" Output: {quant_output}")
 print(f" Size: {quant_size:.2f} MB")
 print(f" Inference time: {quant_time:.4f} s")
-
-

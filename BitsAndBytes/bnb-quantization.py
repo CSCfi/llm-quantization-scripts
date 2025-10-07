@@ -7,12 +7,10 @@ from transformers import (
     BitsAndBytesConfig,
 )
 
-# Load base model and run initial inference
 model_name =  "facebook/opt-125m"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 prompt = "The future of AI is"
 
+# Measure model inference time and generate sample output for a given prompt
 def benchmark(model, tokenizer, prompt):
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
@@ -41,10 +39,14 @@ def benchmark(model, tokenizer, prompt):
 
     return decoded_text, elapsed_time
 
+# Load base model and tokenizer
+model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
 # Run benchmark on full model
 initial_output, initial_time = benchmark(model, tokenizer, prompt)
 
-# Quantize the model with BitsandBytes
+# Set BitsAndBytes Config
 bnb_config = BitsAndBytesConfig(
    load_in_4bit=True,
    bnb_4bit_quant_type="nf4",
@@ -53,14 +55,14 @@ bnb_config = BitsAndBytesConfig(
    bnb_4bit_quant_storage=torch.bfloat16,
 )
 
+# Quantize the model with bitsandbytes
 quant_model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=bnb_config,
     device_map="auto")
 
-quant_tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-quant_output, quant_time = benchmark(quant_model, quant_tokenizer, prompt)
+# Run benchmark on quantized model
+quant_output, quant_time = benchmark(quant_model, tokenizer, prompt)
 
 # Print results
 print("=== Full Model ===")
@@ -70,4 +72,3 @@ print(f" Inference time: {initial_time:.4f} s")
 print("\n=== Quantized Model ===")
 print(f" Output: {quant_output}")
 print(f" Inference time: {quant_time:.4f} s")
-
