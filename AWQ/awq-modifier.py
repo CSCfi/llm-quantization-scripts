@@ -21,7 +21,7 @@ prompt = "The future of AI is"
 # Load model and tokenizer
 model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-dispatch_for_generation(model)
+dispatch_for_generation(model) # prepare model for efficient text generation
 
 # Measure model inference time and generate sample output for a given prompt
 def benchmark(model, tokenizer, prompt):
@@ -107,7 +107,7 @@ tokenizer.save_pretrained(save_dir_quant)
 # Reload quantized model for inference
 quant_model = AutoModelForCausalLM.from_pretrained(save_dir_quant, device_map="auto")
 quant_tokenizer = AutoTokenizer.from_pretrained(save_dir_quant)
-dispatch_for_generation(quant_model) # utility function from llmcompressor.utils that prepares a model for efficient text generation
+dispatch_for_generation(quant_model) # prepare model for efficient text generation
 
 # Run benchmark on quantized model
 quant_output, quant_time = benchmark(quant_model, quant_tokenizer, prompt)
