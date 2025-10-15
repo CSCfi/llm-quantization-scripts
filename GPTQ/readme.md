@@ -27,6 +27,7 @@ source venv/bin/activate
 ### Install packages
 ```bash
 pip install optimum --cache-dir ./.pip-cache
+# tested with optimum==1.27.0
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
 
@@ -40,7 +41,7 @@ Then install with:
 pip install gptqmodel==4.0.0 --no-build-isolation --cache-dir ./.pip-cache
 ```
 
-This version of gptqmodel has been tested with the PyTorch 2.7 module.
+This version of gptqmodel is compatible with PyTorch 2.7.
 
 Note: When quantizing models that use Rotary Positional Embeddings (RoPE), such as LlaMA, you might encounter runtime errors related to rotary dimensions. The current fix is to downgrade transformers to version 4.51.3.
 
@@ -48,6 +49,7 @@ For the **gptq-modifier** example, you need to install the llmcompressor library
 
 ```bash
 pip install llmcompressor --cache-dir ./.pip-cache
+# tested with llmcompressor==0.7.1
 ```
 ## Usage
 
