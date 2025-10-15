@@ -8,8 +8,6 @@ from transformers import (
 )
 
 model_name = "facebook/opt-125m"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
 prompt = "The future of AI is"
 
 # Measure model inference time and generate sample output for a given prompt
