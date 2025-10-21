@@ -65,14 +65,14 @@ Similarly, for gptq-modifier:
 - `run-gptq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
 - `run-gptq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
 
-**Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minutes time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
+**Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minute time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
 For example to run on LUMI, you would run the command:
 
 ```bash
 sbatch run-gptq-config-lumi.sh
 ```
-You can also increase the memory and number of GPUs if you decide to run quantization on larger models.
+You can also increase the memory if you decide to run quantization on larger models. Setting `device_map="auto"` automatically offloads the model to a CPU to help fit the model in memory, and allow the model modules to be moved between the CPU and GPU for quantization.
 
 ## `gptq-config.py`
 - Uses Hugging Face 🤗 `transformers` with [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq).
@@ -94,6 +94,6 @@ You can also increase the memory and number of GPUs if you decide to run quantiz
 
 ## Notes
 - The current scripts use **OPT-125M** for fast experimentation. You can replace `model_name` with a larger model. In this case, you might want to disable saving the models.
-- For large models, `device_map="auto"` lets 🤗 Accelerate handle placement across GPUs.
+- For large models, `device_map="auto"` allows the model modules to be moved between the CPU and GPU for quantization.
 - The `GPTQConfig` path is simpler and integrates directly with Hugging Face pipelines, while the `GPTQModifier` path gives you more flexibility for research and custom recipes.
 - Feel free to experiment with different values for `num_calibration_samples` and `max_seq_lenght`.
