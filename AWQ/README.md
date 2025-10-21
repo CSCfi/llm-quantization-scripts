@@ -48,7 +48,7 @@ The script will quantize the **Falcon-RW-1B** model using the following recipe:
 ```bash
 recipe = AWQModifier(targets="Linear", scheme="W4A16", ignore=["lm_head"])
 ```
-Meaning the script quantizes the model’s linear layers using a mixed-precision approach: weights are reduced to 4-bit while activations remain at 16-bit to retain higher accuracy. The lm_head layer (the model’s output projection) is excluded to preserve output quality. You can check the output in the output file.
+Meaning the script quantizes the model’s linear layers using a mixed-precision approach: weights are reduced to 4-bit while activations remain at 16-bit to retain higher accuracy. Supported formats include W8A8 (INT8 and FP8), W4A16, W8A16, and NVFP4 (with W4A4 and W4A16 support). The lm_head layer (the model’s output projection) is excluded to preserve output quality. Quantization uses the [Ultrachat-200k](https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k) dataset for calibration.
 
 ## Output Includes
 - Generated text before and after quantization.
