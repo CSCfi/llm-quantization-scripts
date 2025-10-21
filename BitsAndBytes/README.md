@@ -21,7 +21,7 @@ For example to run on LUMI, you would run the command:
 ```bash
 sbatch run-bnb-quantization-lumi.sh
 ```
-You can also increase the memory and number of GPUs if you decide to run quantization on larger models.
+You can also increase the memory if you decide to run quantization on larger models. Setting device_map="auto" automatically offloads the model to a CPU to help fit the model in memory, and allow the model modules to be moved between the CPU and GPU for quantization.
 
 ## Output Includes
 
@@ -31,5 +31,5 @@ You can also increase the memory and number of GPUs if you decide to run quantiz
 ## Notes
 
 - The current scripts use OPT-125M for fast experimentation. You can replace `model_name` with a larger model.
-- For large models, `device_map="auto"` lets 🤗 Accelerate handle placement across GPUs.
+- For large models, `device_map="auto"` allows the model modules to be moved between the CPU and GPU for quantization.
 - You can easily change the quantization datatype in the `BitsAndBytesConfig` inside the script.
