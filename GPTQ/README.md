@@ -3,8 +3,8 @@
 This repository contains two practical examples of applying GPTQ quantization to LLMs.  
 Both examples currently use the small **OPT-125M** model for demonstration, but the code is written so you can swap in larger models.
 
-1. **GPTQConfig** — Uses Hugging Face `transformers` and [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq) to quantize the **OPT-125M** model.
-2. **GPTQModifier** — Uses [LLM Compressor](https://github.com/vllm-project/llm-compressor) with a GPTQ recipe to quantize the **OPT-125M** model. 
+1. **GPTQConfig** — Uses Hugging Face `transformers` and [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq) to quantize the **OPT-125M** model to 4-bit precision.
+2. **GPTQModifier** — Uses [LLM Compressor](https://github.com/vllm-project/llm-compressor) with a GPTQ recipe to quantize the **OPT-125M** model to mixed precision W4A16.
 
 ---
 
@@ -76,15 +76,19 @@ You can also increase the memory if you decide to run quantization on larger mod
 
 ## `gptq-config.py`
 - Uses Hugging Face 🤗 `transformers` with [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq).
+- This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit*, 4-bit and 8-bit. 
 - Saves both the full-precision and quantized models. 
 - Compares outputs, inference latency, and model size.
 
 ## `gptq-modifier.py`
 - Uses [LLM Compressor](https://github.com/vllm-project/llm-compressor) with a `GPTQModifier` recipe.
 - Runs explicit **calibration** on a subset of the [Ultrachat-200k](https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k) dataset.
+- This example quantizes the model to mixed precision W4A16 (INT4 weights and FP16 activations). Supported formats include W8A8 (INT8 and FP8), W4A16, W8A16, and NVFP4 (with W4A4 and W4A16 support).
 - Saves both the full-precision and quantized models.
 - Compares outputs, inference latency, and model size.
 - Provides finer control over quantization schemes (e.g. `W4A16`, `ignore=["lm_head"]`).
+
+*3-bit quantization is not currently supported on LUMI with PyTorch 2.7, if you wish to use 3-bit quantization you can use the PyTorch 2.5 module.
 
 ## Output Includes
 - Generated text before and after quantization.
