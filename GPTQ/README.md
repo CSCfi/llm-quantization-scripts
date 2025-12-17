@@ -26,8 +26,7 @@ source venv/bin/activate
 ```
 ### Install packages
 ```bash
-pip install optimum --cache-dir ./.pip-cache
-# tested with optimum==1.27.0
+pip install optimum==1.27.0 --cache-dir ./.pip-cache
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
 
@@ -48,8 +47,7 @@ Note: When quantizing models that use Rotary Positional Embeddings (RoPE), such 
 For the **gptq-modifier** example, you need to install the llmcompressor library.
 
 ```bash
-pip install llmcompressor --cache-dir ./.pip-cache
-# tested with llmcompressor==0.7.1
+pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
 ```
 ## Usage
 
