@@ -42,7 +42,7 @@ pip install gptqmodel==4.0.0 --no-build-isolation --cache-dir ./.pip-cache
 
 This version of gptqmodel is compatible with PyTorch 2.7.
 
-Notes:
+Troubleshooting:
 - If you get an AssetionError from pip's resolver when installing gptqmodel, upgrade pip, setuptools and wheel: `python -m pip install --upgrade pip setuptools wheel`
 - When quantizing models that use Rotary Positional Embeddings (RoPE), such as LlaMA, you might encounter runtime errors related to rotary dimensions. The current fix is to downgrade transformers to version 4.51.3.
 
