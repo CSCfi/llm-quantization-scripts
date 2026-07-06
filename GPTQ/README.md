@@ -8,7 +8,32 @@ Both examples currently use the small **OPT-125M** model for demonstration, but 
 
 ---
 
-## Installations
+## LUMI
+
+To run gptq scripts on LUMI, you have to setup a Python environment using `optimum`, `gptqmodel`, and `llmcompressor`, built on the top of LUMI's AI Singularity framework. 
+
+1. Load the `Singularity` container environment and set the contianer image path. Later, create virtual environment inside the contianer and install the packages. 
+
+```bash
+module purge
+module use /appl/local/laifs/modules
+module load lumi-aif-singularity-bindings
+
+export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260513_121430/lumi-multitorch-full-u24r70f21m50t210-20260513_121430.sif
+
+singularity shell "$SIF"
+
+Singularity> python -m venv venv --system-site-packages
+Singularity> source venv/bin/activate
+(venv) Singularity> pip install optimum==1.27.0
+(venv) Singularity> pip install gptqmodel==4.0.0 --no-build-isolation --cache-dir ./.pip-cache
+(venv) Singularity> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
+
+```
+
+
+## Puhti & Mahti 
+### Installations
 
 The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
 (torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
