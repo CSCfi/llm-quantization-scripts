@@ -22,4 +22,4 @@ export HF_HOME=/scratch/project_462001302/mmahnoor/llm-quantization-scripts/Bits
 mkdir -p $HF_HOME
 export SINGULARITYENV_HF_HOME=$HF_HOME
 
-srun singularity exec -B /scratch/${SLURM_JOB_ACCOUNT}  --cleanenv "$SIF" bash -lc 'python3 bnb-quantization.py'
+srun singularity exec "$SIF" bash -c 'python3 bnb-quantization.py'
