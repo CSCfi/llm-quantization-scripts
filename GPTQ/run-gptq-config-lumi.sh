@@ -23,4 +23,4 @@ export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-2026051
 export HF_HOME=/scratch/${SLURM_JOB_ACCOUNT}/${USER}/hf-cache
 mkdir -p $HF_HOME
 
-srun singularity exec "$SIF" bash -c 'source optimum-env/bin/activate && python3 gptq-config.py'
+srun singularity exec "$SIF" bash -c 'source venv/bin/activate && python3 gptq-config.py'
