@@ -27,6 +27,7 @@ def benchmark(model, tokenizer, prompt):
             **inputs,
             max_new_tokens=50,
             do_sample=True,
+            use_cache=False,
             temperature=0.7,
 )
 
