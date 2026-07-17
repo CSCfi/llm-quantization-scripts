@@ -10,7 +10,8 @@ The script `bnb-quantization.py` will quantize the OPT-125M model to nf4 or Norm
 
 The launch scripts are: 
 
-- `run-bnb-quantization-lumi.sh` - quantizes model on LUMI with 1 GPU 
+- `run-bnb-quantization-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-bnb-quantization-roihu.sh` - quantizes model on Roihu with 1 GPU
 - `run-bnb-quantization-mahti.sh` - quantizes model on Mahti with 1 GPU
 - `run-bnb-quantization-puhti.sh` - quantizes model on Puhti with 1 GPU
 
