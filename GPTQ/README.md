@@ -53,6 +53,8 @@ source venv/bin/activate
 pip install gptqmodel==7.1.0 dataset --no-build-isolation --cache-dir ./.pip-cache
 ```
 This version of gptqmodel is compatible with python-pytorch/2.10.
+
+
 ---
 
 ## Puhti & Mahti 
