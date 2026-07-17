@@ -32,6 +32,29 @@ Singularity> source venv/bin/activate
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
 
+--
+## Roihu
+
+The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
+(torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
+
+### Load the module
+```bash
+module purge
+module load python-pytorch/2.10
+```
+### Create and activate a virtual environment using system packages
+```bash
+python3 -m venv --system-site-packages venv
+source venv/bin/activate
+```
+### Install packages
+```bash
+pip install gptqmodel==7.1.0 dataset --no-build-isolation --cache-dir ./.pip-cache
+```
+This version of gptqmodel is compatible with python-pytorch/2.10.
+---
+
 ## Puhti & Mahti 
 ### Installations
 
