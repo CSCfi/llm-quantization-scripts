@@ -30,7 +30,8 @@ The flag --cache-dir points the pip cache to the current (scratch) folder instea
 
 The launch scripts are: 
 
-- `run-awq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU 
+- `run-awq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-awq-modifier-roihu.sh` - quantizes model on Roihu with 1 GPU
 - `run-awq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
 - `run-awq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
 
