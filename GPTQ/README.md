@@ -32,7 +32,7 @@ Singularity> source venv/bin/activate
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
 
---
+---
 ## Roihu
 
 The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
