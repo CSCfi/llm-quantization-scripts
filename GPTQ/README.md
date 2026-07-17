@@ -57,16 +57,9 @@ This version of gptqmodel is compatible with python-pytorch/2.10.
 For the **gptq-modifier** example, you need to install the llmcompressor library.
 
 ```bash
-(venv)> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
+(venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
 (venv)> pip install wandb --cache-dir ./.pip-cache
 ``` 
-
-Note: After installing packages, double-check that `torch` and `torchvision` are still coming from the module (`/usr/local/lib64/python3.12/site-packages`), not from your venv. Some packages you install (like `gptqmodel` or `llmcompressor`) can silently pull in their own copy of `torch` into the venv as a side effect — and since a venv-local package always takes priority over the module's version, this creates a mismatched `torch`/`torchvision` pair that breaks imports.
-
-To uninstall: 
-```bash
-(venv)> pip uninstall torch -y
-```
 
 ---
 
