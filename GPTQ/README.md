@@ -68,9 +68,6 @@ To uninstall:
 (venv)> pip uninstall torch -y
 ```
 
-
-
-
 ---
 
 ## Puhti & Mahti 
