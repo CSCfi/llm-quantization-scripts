@@ -37,6 +37,15 @@ The launch scripts are:
 
 **Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minutes time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
+**ON ROIHU:**
+
+**Note:** After installing packages, double-check that `torch` and `torchvision` are still coming from the module (`/usr/local/lib64/python3.12/site-packages`), not from your venv. Some packages you install (like `gptqmodel` or `llmcompressor`) can silently pull in their own copy of `torch` into the venv as a side effect — and since a venv-local package always takes priority over the module's version, this creates a mismatched `torch`/`torchvision` pair that breaks imports.
+
+To uninstall: 
+```bash
+(venv)> pip uninstall torch -y
+```
+
 For example to run on LUMI, you would run the command: 
 
 ```bash
