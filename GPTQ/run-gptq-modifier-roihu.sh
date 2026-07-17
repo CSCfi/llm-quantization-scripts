@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --argos=no
-#SBATCH --account=project_2014553
+#SBATCH --account=project_xxxxxxx
 #SBATCH --partition=gpumedium
 #SBATCH --time=00:30:00
 #SBATCH --nodes=1
