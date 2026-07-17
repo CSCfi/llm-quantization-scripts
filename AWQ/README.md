@@ -86,7 +86,7 @@ source venv/bin/activate
 ```
 ### Install packages
 ```bash
-pip install optimum==1.27.0 llmcompressor==0.7.1 --cache-dir ./.pip-cache
+(venv)> pip install optimum==1.27.0 llmcompressor==0.7.1 --cache-dir ./.pip-cache
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
 
