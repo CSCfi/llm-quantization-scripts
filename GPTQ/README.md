@@ -121,13 +121,15 @@ pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
 
 The launch scripts for gptq-config are: 
 
-- `run-gptq-config-lumi.sh` - quantizes model on LUMI with 1 GPU 
+- `run-gptq-config-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-gptq-config-roihu.sh` - quantizes model on Roihu with 1 GPU
 - `run-gptq-config-mahti.sh` - quantizes model on Mahti with 1 GPU
 - `run-gptq-config-puhti.sh` - quantizes model on Puhti with 1 GPU
 
 Similarly, for gptq-modifier:
 
-- `run-gptq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU 
+- `run-gptq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-gptq-modifier-roihu.sh` - quantizes model on Roihu with 1 GPU
 - `run-gptq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
 - `run-gptq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
 
