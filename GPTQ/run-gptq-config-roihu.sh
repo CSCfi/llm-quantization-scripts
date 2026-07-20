@@ -18,4 +18,4 @@ source venv/bin/activate
 export HF_HOME=/scratch/$SLURM_JOB_ACCOUNT/$USER/hf-cache/
 mkdir -p $HF_HOME
 
-srun python3 gptq-config-roihu.py
+srun python3 gptq-config.py
