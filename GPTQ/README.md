@@ -133,8 +133,8 @@ sbatch run-gptq-config-lumi.sh
 You can also increase the memory if you decide to run quantization on larger models. Setting `device_map="auto"` automatically offloads the model to a CPU to help fit the model in memory, and allow the model modules to be moved between the CPU and GPU for quantization.
 
 ## `gptq-config.py`
-- Uses [`gptqmodel`](https://github.com/modelcloud/gptqmodel)(`GPTQModel.load`, `QuantizeConfig`) with `QuantizeConfig` recipe. 
-- - Runs explicit **calibration** on a subset of the [aleenai/c4](https://huggingface.co/datasets/allenai/c4) dataset.
+- Uses [`gptqmodel`](https://github.com/modelcloud/gptqmodel)(`GPTQModel.load`, `QuantizeConfig`) with `QuantizeConfig` recipe.
+- Runs explicit **calibration** on a subset of the [aleenai/c4](https://huggingface.co/datasets/allenai/c4) dataset.
 - This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit*, 4-bit and 8-bit. 
 - Saves both the full-precision and quantized models. 
 - Compares outputs, inference latency, and model size.
