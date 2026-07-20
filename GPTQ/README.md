@@ -3,7 +3,7 @@
 This repository contains two practical examples of applying GPTQ quantization to LLMs.  
 Both examples currently use the small **OPT-125M** model for demonstration, but the code is written so you can swap in larger models.
 
-1. **GPTQConfig** — Uses Hugging Face `transformers` and [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq) to quantize the **OPT-125M** model to 4-bit precision.
+1. **GPTQModel** — Uses [GPTQModel](https://github.com/modelcloud/gptqmodel) with `QuantizeConfig` to quantize the **OPT-125M** model to 4-bit precision.
 2. **GPTQModifier** — Uses [LLM Compressor](https://github.com/vllm-project/llm-compressor) with a GPTQ recipe to quantize the **OPT-125M** model to mixed precision W4A16.
 
 ---
@@ -133,7 +133,8 @@ sbatch run-gptq-config-lumi.sh
 You can also increase the memory if you decide to run quantization on larger models. Setting `device_map="auto"` automatically offloads the model to a CPU to help fit the model in memory, and allow the model modules to be moved between the CPU and GPU for quantization.
 
 ## `gptq-config.py`
-- Uses Hugging Face 🤗 `transformers` with [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq).
+- Uses [`gptqmodel`](https://github.com/modelcloud/gptqmodel)(`GPTQModel.load`, `QuantizeConfig`) with `QuantizeConfig` recipe. 
+- - Runs explicit **calibration** on a subset of the [aleenai/c4](https://huggingface.co/datasets/allenai/c4) dataset.
 - This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit*, 4-bit and 8-bit. 
 - Saves both the full-precision and quantized models. 
 - Compares outputs, inference latency, and model size.
