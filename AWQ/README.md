@@ -61,36 +61,12 @@ For the **gptq-modifier** example, you need to install the llmcompressor library
 ``` 
 ---
 
-## Puhti & Mahti
-
-The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
-(torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
-
-### Load the module
-```bash
-module purge
-module use /appl/local/csc/modulefiles
-module load pytorch/2.7
-```
-### Create and activate a virtual environment using system packages
-```bash
-python3 -m venv --system-site-packages venv
-source venv/bin/activate
-```
-### Install packages
-```bash
-(venv)> pip install optimum==1.27.0 llmcompressor==0.7.1 --cache-dir ./.pip-cache
-```
-The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
-
 ## Usage
 
 The launch scripts are: 
 
 - `run-awq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU
 - `run-awq-modifier-roihu.sh` - quantizes model on Roihu with 1 GPU
-- `run-awq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
-- `run-awq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
 
 **Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minutes time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
