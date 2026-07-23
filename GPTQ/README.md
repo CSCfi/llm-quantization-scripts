@@ -58,55 +58,10 @@ For the **gptq-modifier** example, you need to install the llmcompressor library
 
 ```bash
 (venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
-(venv)> pip install wandb --cache-dir ./.pip-cache
 ``` 
 
 ---
 
-## Puhti & Mahti 
-### Installations
-
-The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
-(torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
-
-### Load the module
-```bash
-module purge
-module use /appl/local/csc/modulefiles
-module load pytorch/2.7
-```
-### Create and activate a virtual environment using system packages
-```bash
-python3 -m venv --system-site-packages venv
-source venv/bin/activate
-```
-### Install packages
-```bash
-(venv)> pip install optimum==1.27.0 --cache-dir ./.pip-cache
-```
-The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
-
-The GPTQmodel library is needed for the **gptq-config** example. To install it on Puhti or Mahti, you need to use a GPU interactively when installing, or set the following environment variable:
-
-- For Puhti:`export TORCH_CUDA_ARCH_LIST="7.0"`
-- For Mahti: `export TORCH_CUDA_ARCH_LIST="8.0"`
-
-Then install with: 
-```bash
-(venv)> pip install gptqmodel==4.0.0 --no-build-isolation --cache-dir ./.pip-cache
-```
-
-This version of gptqmodel is compatible with PyTorch 2.7.
-
-Troubleshooting:
-- If you get an AssetionError from pip's resolver when installing gptqmodel, upgrade pip, setuptools and wheel: `python -m pip install --upgrade pip setuptools wheel`
-- When quantizing models that use Rotary Positional Embeddings (RoPE), such as LlaMA, you might encounter runtime errors related to rotary dimensions. The current fix is to downgrade transformers to version 4.51.3.
-
-For the **gptq-modifier** example, you need to install the llmcompressor library.
-
-```bash
-(venv)> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
-```
 ## Usage
 
 The launch scripts for gptq-config are: 
