@@ -85,7 +85,7 @@ You can also increase the memory if you decide to run quantization on larger mod
 ## `gptq-config.py`
 - Uses [`gptqmodel`](https://github.com/modelcloud/gptqmodel)(`GPTQModel.load`, `QuantizeConfig`) with `QuantizeConfig` recipe.
 - Runs explicit **calibration** on a subset of the [aleenai/c4](https://huggingface.co/datasets/allenai/c4) dataset.
-- This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit*, 4-bit and 8-bit. 
+- This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit, 4-bit and 8-bit. 
 - Saves both the full-precision and quantized models. 
 - Compares outputs, inference latency, and model size.
 
@@ -96,8 +96,6 @@ You can also increase the memory if you decide to run quantization on larger mod
 - Saves both the full-precision and quantized models.
 - Compares outputs, inference latency, and model size.
 - Provides finer control over quantization schemes (e.g. `W4A16`, `ignore=["lm_head"]`).
-
-*3-bit quantization is not currently supported on LUMI with PyTorch 2.7, if you wish to use 3-bit quantization you can use the PyTorch 2.5 module.
 
 ## Output Includes
 - Generated text before and after quantization.
