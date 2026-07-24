@@ -25,7 +25,7 @@ singularity shell "$SIF"
 
 Apptainer> python -m venv venv --system-site-packages
 Apptainer> source venv/bin/activate
-(venv) Apptainer> pip install gptqmodel==7.1.0 dataset --no-build-isolation --cache-dir ./.pip-cache
+(venv) Apptainer> pip install gptqmodel==7.1.0 --no-build-isolation --cache-dir ./.pip-cache
 (venv) Apptainer> pip install llmcompressor==0.10.0 --cache-dir ./.pip-cache
 
 ```
