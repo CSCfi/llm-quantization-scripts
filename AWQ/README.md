@@ -21,10 +21,10 @@ export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-2026051
 
 singularity shell "$SIF"
 
-Singularity> python -m venv venv --system-site-packages
-Singularity> source venv/bin/activate
-(venv) Singularity> pip install optimum==1.27.0
-(venv) Singularity> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
+Apptainer> python -m venv venv --system-site-packages
+Apptainer> source venv/bin/activate
+(venv) Apptainer> pip install optimum==1.27.0
+(venv) Apptainer> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
 
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
