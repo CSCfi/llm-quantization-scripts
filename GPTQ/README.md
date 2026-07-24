@@ -49,7 +49,7 @@ source venv/bin/activate
 ```
 ### Install packages
 ```bash
-(venv)> pip install gptqmodel==7.1.0 dataset --no-build-isolation --cache-dir ./.pip-cache
+(venv)> pip install gptqmodel==7.1.0 --no-build-isolation --cache-dir ./.pip-cache
 ```
 This version of gptqmodel is compatible with python-pytorch/2.10.
 
