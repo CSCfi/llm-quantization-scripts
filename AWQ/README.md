@@ -8,9 +8,9 @@ In order to target weight and activation scaling locations within the model, the
 
 ## LUMI
 
-To run gptq scripts on LUMI, you have to setup a Python environment using `optimum`, `gptqmodel`, and `llmcompressor`, built on the top of LUMI's AI Singularity framework. 
+To run gptq scripts on LUMI, you have to install `gptqmodel` on top of the LUMI AI Factory container in a virtual environment. `Llmcompressor` and other libraries needed are already in the container.
 
-Load the `Singularity` container environment and set the contianer image path. Later, create virtual environment inside the contianer and install the packages. 
+Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
 
 ```bash
 module purge
@@ -24,7 +24,6 @@ singularity shell "$SIF"
 Apptainer> python -m venv venv --system-site-packages
 Apptainer> source venv/bin/activate
 (venv) Apptainer> pip install optimum==1.27.0
-(venv) Apptainer> pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
 
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
@@ -57,7 +56,6 @@ For the **gptq-modifier** example, you need to install the llmcompressor library
 
 ```bash
 (venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
-(venv)> pip install wandb --cache-dir ./.pip-cache
 ``` 
 ---
 
