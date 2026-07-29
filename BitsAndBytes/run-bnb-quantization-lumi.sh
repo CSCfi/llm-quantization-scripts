@@ -7,7 +7,6 @@
 #SBATCH --mem=32G
 #SBATCH --time=00:30:00
 
-
 # Load the module
 module purge
 module use /appl/local/laifs/modules
@@ -18,7 +17,7 @@ export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-2026051
 
 # This will store all the Hugging Face cache such as downloaded models
 # and datasets in the project's scratch folder
-export HF_HOME=/scratch/project_462001302/mmahnoor/llm-quantization-scripts/BitsAndBytes/hf-cache
+export HF_HOME=/scratch/$SLURM_JOB_ACCOUNT/$USER/llm-quantization-scripts/BitsAndBytes/hf-cache
 mkdir -p $HF_HOME
 export SINGULARITYENV_HF_HOME=$HF_HOME
 
