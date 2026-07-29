@@ -10,7 +10,7 @@ Both examples currently use the small **OPT-125M** model for demonstration, but 
 
 ## LUMI
 
-To run gptq scripts on LUMI, you have to install `gptqmodel` and `llmcompressor` on top of the LUMI AI Factory container in a virtual environment.
+To run gptq scripts on LUMI, you have to install `gptqmodel` on top of the LUMI AI Factory container in a virtual environment. `Llmcompressor` and other libraries needed are already in the container.
 
 Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
 
@@ -26,7 +26,6 @@ singularity shell "$SIF"
 Apptainer> python -m venv venv --system-site-packages
 Apptainer> source venv/bin/activate
 (venv) Apptainer> pip install gptqmodel==7.1.0 --no-build-isolation --cache-dir ./.pip-cache
-(venv) Apptainer> pip install llmcompressor==0.10.0 --cache-dir ./.pip-cache
 
 ```
 The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
