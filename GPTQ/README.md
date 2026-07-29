@@ -10,9 +10,9 @@ Both examples currently use the small **OPT-125M** model for demonstration, but 
 
 ## LUMI
 
-To run gptq scripts on LUMI, you have to setup a Python environment using `gptqmodel` and `llmcompressor`, built on the top of LUMI's AI Singularity framework. 
+To run gptq scripts on LUMI, you have to install `gptqmodel` and `llmcompressor` on top of the LUMI AI Factory container in a virtual environment.
 
-Load the `Singularity` container environment and set the contianer image path. Later, create virtual environment inside the contianer and install the packages. 
+Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
 
 ```bash
 module purge
