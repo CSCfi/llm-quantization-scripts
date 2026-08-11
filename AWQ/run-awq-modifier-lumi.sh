@@ -17,7 +17,6 @@ module load lumi-aif-singularity-bindings
 # export path to used container image
 export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260731_122833/lumi-multitorch-full-u24r70f21m50>
 
-
 # Activate the virtual environment from your current directory or change to th
 # This will store all the Hugging Face cache such as downloaded models
 # and datasets in the project's scratch folder
