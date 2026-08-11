@@ -8,7 +8,7 @@ In order to target weight and activation scaling locations within the model, the
 
 ## LUMI
 
-To run gptq scripts on LUMI, you have to install `gptqmodel` on top of the LUMI AI Factory container in a virtual environment. `Llmcompressor` and other libraries needed are already in the container.
+To run AWQ quantization scripts on LUMI, you can use the `gptqmodel` library that already ships inside the LUMI AI Factory container — no extra packages or virtual environment are required for AWQ. `torch` , `transformers`, and `datasets` are also already provided in the container.
 
 Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
 
@@ -17,17 +17,9 @@ module purge
 module use /appl/local/laifs/modules
 module load lumi-aif-singularity-bindings
 
-export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260513_121430/lumi-multitorch-full-u24r70f21m50t210-20260513_121430.sif
-
-singularity shell "$SIF"
-
-Apptainer> python -m venv venv --system-site-packages
-Apptainer> source venv/bin/activate
-(venv) Apptainer> pip install optimum==1.27.0
+export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260731_122833/lumi-multitorch-full-u24r70f21m50t210-20260731_122833.sif
 
 ```
-The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
-
 
 ---
 
@@ -47,12 +39,6 @@ python3 -m venv --system-site-packages venv
 source venv/bin/activate
 ```
 ### Install packages
-```bash
-(venv)> pip install gptqmodel==7.1.0 dataset --no-build-isolation --cache-dir ./.pip-cache
-```
-This version of gptqmodel is compatible with python-pytorch/2.10.
-
-For the **gptq-modifier** example, you need to install the llmcompressor library.
 
 ```bash
 (venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
