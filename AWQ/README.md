@@ -73,6 +73,6 @@ Meaning the script quantizes the model’s linear layers using a mixed-precision
 - Model size (MB) before and after quantization.
 
 ## Notes
-- The current scripts use **TinyLlama** for fast experimentation. You can replace `model_name` with a larger model. In this case, you might want to disable saving the full model.
+- The current scripts use **TinyLlama-1.1B-Chat-v1.0** for fast experimentation. You can replace `model_name` with a larger model. In this case, you might want to disable saving the full model.
 - For large models, `device_map="auto"` allows the model modules to be moved between the CPU and GPU for quantization.
 - Feel free to experiment with different values for `num_calibration_samples` and `max_seq_lenght` and to modify the quantization recipe.
