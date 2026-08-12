@@ -10,7 +10,7 @@ In order to target weight and activation scaling locations within the model, the
 
 To run AWQ quantization scripts on LUMI, you can use the `gptqmodel` library that already ships inside the LUMI AI Factory container — no extra packages or virtual environment are required for AWQ. `torch` , `transformers`, and `datasets` are also already provided in the container.
 
-Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
+The script loads the `Singularity` container environment and sets the container image path:
 
 ```bash
 module purge
@@ -26,7 +26,7 @@ export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-2026073
 ## Roihu
 
 The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
-(torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
+(torch, transformers, datasets, accelerate). Llmcompressor can be installed on top of the module in a virtual environment.
 
 ### Load the module
 ```bash
