@@ -4,7 +4,7 @@ This example demonstrates quantizing the **OPT-125M** model using the [bitsandby
 
 ## Running the script
 
-All of the libraries needed to run this example (transformers, bitsandbytes, accelerate) are covered by the Lumi AI Factory Container on LUMI or the CSC preinstalled PyTorch module on Roihu.
+All of the libraries needed to run this example (transformers, bitsandbytes, accelerate) are covered by the AI Factory provided Container on LUMI or the CSC preinstalled PyTorch module on Roihu.
 
 The script `bnb-quantization.py` will quantize the OPT-125M model to nf4 or NormalFloat 4-bit, introduced to use with QLoRA technique, a parameter efficient fine-tuning technique. It can be used with QLoRA for fine-tuning, or without just for reducing model size. 
 
