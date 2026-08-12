@@ -6,14 +6,32 @@ In order to target weight and activation scaling locations within the model, the
 
 ## Installations
 
+## LUMI
+
+To run AWQ quantization scripts on LUMI, you can use the `gptqmodel` library that already ships inside the LUMI AI Factory container — no extra packages or virtual environment are required for AWQ. `torch` , `transformers`, and `datasets` are also already provided in the container.
+
+The script loads the `Singularity` container environment and sets the container image path:
+
+```bash
+module purge
+module use /appl/local/laifs/modules
+module load lumi-aif-singularity-bindings
+
+export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260731_122833/lumi-multitorch-full-u24r70f21m50t210-20260731_122833.sif
+
+```
+
+---
+
+## Roihu
+
 The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
-(torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
+(torch, transformers, datasets, accelerate). Llmcompressor can be installed on top of the module in a virtual environment.
 
 ### Load the module
 ```bash
 module purge
-module use /appl/local/csc/modulefiles
-module load pytorch/2.7
+module load python-pytorch/2.10
 ```
 ### Create and activate a virtual environment using system packages
 ```bash
@@ -21,18 +39,18 @@ python3 -m venv --system-site-packages venv
 source venv/bin/activate
 ```
 ### Install packages
+
 ```bash
-pip install optimum==1.27.0 llmcompressor==0.7.1 --cache-dir ./.pip-cache
-```
-The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
+(venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
+``` 
+---
 
 ## Usage
 
 The launch scripts are: 
 
-- `run-awq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU 
-- `run-awq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
-- `run-awq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
+- `run-awq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-awq-modifier-roihu.sh` - quantizes model on Roihu with 1 GPU
 
 **Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minutes time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
@@ -55,6 +73,6 @@ Meaning the script quantizes the model’s linear layers using a mixed-precision
 - Model size (MB) before and after quantization.
 
 ## Notes
-- The current scripts use **Falcon-RW-1B** for fast experimentation. You can replace `model_name` with a larger model. In this case, you might want to disable saving the full model.
+- The current scripts use **TinyLlama-1.1B-Chat-v1.0** for fast experimentation. You can replace `model_name` with a larger model. In this case, you might want to disable saving the full model.
 - For large models, `device_map="auto"` allows the model modules to be moved between the CPU and GPU for quantization.
 - Feel free to experiment with different values for `num_calibration_samples` and `max_seq_lenght` and to modify the quantization recipe.

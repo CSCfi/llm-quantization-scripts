@@ -11,7 +11,7 @@ from llmcompressor.entrypoints.oneshot import oneshot
 from llmcompressor.modifiers.awq import AWQModifier
 from llmcompressor.utils import dispatch_for_generation
 
-model_name = "tiiuae/falcon-rw-1b"
+model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 dataset_name = "HuggingFaceH4/ultrachat_200k"
 dataset_split = "train_sft"
 num_calibration_samples = 256

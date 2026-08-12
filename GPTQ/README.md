@@ -3,12 +3,35 @@
 This repository contains two practical examples of applying GPTQ quantization to LLMs.  
 Both examples currently use the small **OPT-125M** model for demonstration, but the code is written so you can swap in larger models.
 
-1. **GPTQConfig** — Uses Hugging Face `transformers` and [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq) to quantize the **OPT-125M** model to 4-bit precision.
+1. **GPTQModel** — Uses [GPTQModel](https://github.com/modelcloud/gptqmodel) with `QuantizeConfig` to quantize the **OPT-125M** model to 4-bit precision.
 2. **GPTQModifier** — Uses [LLM Compressor](https://github.com/vllm-project/llm-compressor) with a GPTQ recipe to quantize the **OPT-125M** model to mixed precision W4A16.
 
 ---
 
-## Installations
+## LUMI
+
+To run gptq scripts on LUMI, you have to install `gptqmodel` on top of the LUMI AI Factory container in a virtual environment. `Llmcompressor` and other libraries needed are already in the container.
+
+Load the `Singularity` container environment and set the container image path. Later, create virtual environment inside the container and install the packages. 
+
+```bash
+module purge
+module use /appl/local/laifs/modules
+module load lumi-aif-singularity-bindings
+
+export SIF=/appl/local/laifs/containers/lumi-multitorch-u24r70f21m50t210-20260731_122833/lumi-multitorch-full-u24r70f21m50t210-20260731_122833.sif
+
+singularity shell "$SIF"
+
+Apptainer> python -m venv venv --system-site-packages
+Apptainer> source venv/bin/activate
+(venv) Apptainer> pip install gptqmodel==7.1.0 --no-build-isolation --cache-dir ./.pip-cache
+
+```
+The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota.
+
+---
+## Roihu
 
 The CSC preinstalled PyTorch module covers most of the libraries needed to run these examples
 (torch, transformers, datasets, accelerate). The rest can be installed on top of the module in a virtual environment.
@@ -16,8 +39,7 @@ The CSC preinstalled PyTorch module covers most of the libraries needed to run t
 ### Load the module
 ```bash
 module purge
-module use /appl/local/csc/modulefiles
-module load pytorch/2.7
+module load python-pytorch/2.10
 ```
 ### Create and activate a virtual environment using system packages
 ```bash
@@ -26,44 +48,29 @@ source venv/bin/activate
 ```
 ### Install packages
 ```bash
-pip install optimum==1.27.0 --cache-dir ./.pip-cache
+(venv)> pip install gptqmodel==7.1.0 --no-build-isolation --cache-dir ./.pip-cache
 ```
-The flag --cache-dir points the pip cache to the current (scratch) folder instead of the default (home directory), to avoid filling up home directory quota. 
-
-The GPTQmodel library is needed for the **gptq-config** example. To install it on Puhti or Mahti, you need to use a GPU interactively when installing, or set the following environment variable:
-
-- For Puhti:`export TORCH_CUDA_ARCH_LIST="7.0"`
-- For Mahti: `export TORCH_CUDA_ARCH_LIST="8.0"`
-
-Then install with: 
-```bash
-pip install gptqmodel==4.0.0 --no-build-isolation --cache-dir ./.pip-cache
-```
-
-This version of gptqmodel is compatible with PyTorch 2.7.
-
-Troubleshooting:
-- If you get an AssetionError from pip's resolver when installing gptqmodel, upgrade pip, setuptools and wheel: `python -m pip install --upgrade pip setuptools wheel`
-- When quantizing models that use Rotary Positional Embeddings (RoPE), such as LlaMA, you might encounter runtime errors related to rotary dimensions. The current fix is to downgrade transformers to version 4.51.3.
+This version of gptqmodel is compatible with python-pytorch/2.10.
 
 For the **gptq-modifier** example, you need to install the llmcompressor library.
 
 ```bash
-pip install llmcompressor==0.7.1 --cache-dir ./.pip-cache
-```
+(venv)> pip install llmcompressor==0.12.0 --cache-dir ./.pip-cache
+``` 
+
+---
+
 ## Usage
 
 The launch scripts for gptq-config are: 
 
-- `run-gptq-config-lumi.sh` - quantizes model on LUMI with 1 GPU 
-- `run-gptq-config-mahti.sh` - quantizes model on Mahti with 1 GPU
-- `run-gptq-config-puhti.sh` - quantizes model on Puhti with 1 GPU
+- `run-gptq-config-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-gptq-config-roihu.sh` - quantizes model on Roihu with 1 GPU
 
 Similarly, for gptq-modifier:
 
-- `run-gptq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU 
-- `run-gptq-modifier-mahti.sh` - quantizes model on Mahti with 1 GPU
-- `run-gptq-modifier-puhti.sh` - quantizes model on Puhti with 1 GPU
+- `run-gptq-modifier-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-gptq-modifier-roihu.sh` - quantizes model on Roihu with 1 GPU
 
 **Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minute time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
@@ -75,8 +82,9 @@ sbatch run-gptq-config-lumi.sh
 You can also increase the memory if you decide to run quantization on larger models. Setting `device_map="auto"` automatically offloads the model to a CPU to help fit the model in memory, and allow the model modules to be moved between the CPU and GPU for quantization.
 
 ## `gptq-config.py`
-- Uses Hugging Face 🤗 `transformers` with [`GPTQConfig`](https://huggingface.co/docs/transformers/en/quantization/gptq).
-- This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit*, 4-bit and 8-bit. 
+- Uses [`gptqmodel`](https://github.com/modelcloud/gptqmodel)(`GPTQModel.load`, `QuantizeConfig`) with `QuantizeConfig` recipe.
+- Runs explicit **calibration** on a subset of the [aleenai/c4](https://huggingface.co/datasets/allenai/c4) dataset.
+- This example quantizes the model to 4-bit precision, supported precisions are 2-bit, 3-bit, 4-bit and 8-bit. 
 - Saves both the full-precision and quantized models. 
 - Compares outputs, inference latency, and model size.
 
@@ -87,8 +95,6 @@ You can also increase the memory if you decide to run quantization on larger mod
 - Saves both the full-precision and quantized models.
 - Compares outputs, inference latency, and model size.
 - Provides finer control over quantization schemes (e.g. `W4A16`, `ignore=["lm_head"]`).
-
-*3-bit quantization is not currently supported on LUMI with PyTorch 2.7, if you wish to use 3-bit quantization you can use the PyTorch 2.5 module.
 
 ## Output Includes
 - Generated text before and after quantization.

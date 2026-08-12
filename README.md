@@ -23,6 +23,6 @@ We provide examples and experiments for:
 
 3. **Guides & Utilities**  
    - Helper functions for measuring model size, timing inference, and testing the quantized model.  
-   - Notes on how to run the examples on Puhti, Mahti and LUMI.
+   - Notes on how to run the examples on LUMI and Roihu.
      
 ---

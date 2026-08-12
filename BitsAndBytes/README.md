@@ -4,15 +4,14 @@ This example demonstrates quantizing the **OPT-125M** model using the [bitsandby
 
 ## Running the script
 
-All of the libraries needed to run this example (transformers, bitsandbytes, accelerate) are covered by the CSC preinstalled PyTorch module.
+All of the libraries needed to run this example (transformers, bitsandbytes, accelerate) are covered by the AI Factory provided Container on LUMI or the CSC preinstalled PyTorch module on Roihu.
 
 The script `bnb-quantization.py` will quantize the OPT-125M model to nf4 or NormalFloat 4-bit, introduced to use with QLoRA technique, a parameter efficient fine-tuning technique. It can be used with QLoRA for fine-tuning, or without just for reducing model size. 
 
 The launch scripts are: 
 
-- `run-bnb-quantization-lumi.sh` - quantizes model on LUMI with 1 GPU 
-- `run-bnb-quantization-mahti.sh` - quantizes model on Mahti with 1 GPU
-- `run-bnb-quantization-puhti.sh` - quantizes model on Puhti with 1 GPU
+- `run-bnb-quantization-lumi.sh` - quantizes model on LUMI with 1 GPU
+- `run-bnb-quantization-roihu.sh` - quantizes model on Roihu with 1 GPU
 
 **Note:** the scripts are made to be run on `gputest` or `dev-g` partition with a 30 minutes time-limit. You have to select the proper partition for longer jobs for your real runs. Additionally, change the `--account` parameter to your own project code. 
 
